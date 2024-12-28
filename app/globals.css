@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply transition-colors duration-200;
+  }
+}
+
+@keyframes shockwave {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.5);
+    box-shadow: 0 0 0 50px rgba(255, 0, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: brightness(1);
+  }
+  20% {
+    transform: scale(1.2);
+    opacity: 0.9;
+    filter: brightness(1.5);
+  }
+  40% {
+    transform: scale(1.4);
+    opacity: 0.8;
+    filter: brightness(2);
+  }
+  60% {
+    transform: scale(1.6);
+    opacity: 0.7;
+    filter: brightness(3);
+  }
+  80% {
+    transform: scale(1.8);
+    opacity: 0.6;
+    filter: brightness(4);
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+    filter: brightness(5);
+  }
+}
+
+@keyframes debris {
+  0% {
+    transform: translate(0, 0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--r));
+    opacity: 0;
+  }
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes gameOverText {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1) rotate(-10deg);
+    opacity: 0;
+    filter: blur(10px);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2) rotate(5deg);
+    opacity: 0.8;
+    filter: blur(0);
+  }
+  75% {
+    transform: translate(-50%, -50%) scale(0.9) rotate(-2deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+.animate-shockwave {
+  animation: shockwave 0.5s ease-out;
+}
+
+.animate-shake {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.animate-explode {
+  animation: explode 0.8s ease-out forwards;
+}
+
+.animate-debris {
+  animation: debris 1s ease-out forwards;
+}
+
+.animate-flash {
+  animation: flash 0.2s ease-in-out 3;
+}
+
+.game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--x) var(--y), 
+    rgba(255,0,0,0.8) 0%,
+    rgba(255,0,0,0) 100%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.game-over-overlay.active {
+  opacity: 1;
+}
+
+@keyframes reveal {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes flag {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.2) rotate(-15deg);
+  }
+  75% {
+    transform: scale(1.2) rotate(15deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes victory {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal {
+  animation: reveal 0.3s ease-out;
+}
+
+.animate-flag {
+  animation: flag 0.5s ease-out;
+}
+
+.animate-victory {
+  animation: victory 0.5s ease-in-out infinite;
+}
+
+.game-over-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  font-size: 6rem;
+  font-weight: 900;
+  color: #ff3333;
+  text-shadow: 
+    0 1px 0 #cc0000,
+    0 2px 0 #b30000,
+    0 3px 0 #990000,
+    0 4px 0 #800000,
+    0 5px 0 #660000,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25),
+    0 10px 10px rgba(0,0,0,.2),
+    0 20px 20px rgba(0,0,0,.15);
+  white-space: nowrap;
+  z-index: 9999;
+  pointer-events: none;
+  letter-spacing: 0.1em;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #ff3333 0%, #990000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  backdrop-filter: blur(4px);
+  animation: gameOverText 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 17, 24, 39;
+} 
